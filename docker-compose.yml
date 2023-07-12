@@ -1,0 +1,28 @@
+version: "3"
+services:
+
+  test:
+    # image: nginx:alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
+
+  web:
+    # image: nginx:alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - /app/node_modules
+      - .:/app
+    networks:
+      - network_onme
+    command: ["npm", "run", "start"]
+ 
